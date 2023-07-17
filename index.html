@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>PassVault</title>
+    <meta charset="UTF-8">
+    <!-- Bootstrap 4 CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <style>
+        body {
+            padding-top: 20px;
+            padding-bottom: 20px;
+        }
+        .form-upload, .form-decrypt {
+            width: 100%;
+            max-width: 600px;
+            padding: 15px;
+            margin: auto;
+        }
+    </style>
+</head>
+<body>
+<script>
+function checkFileSize(input) {
+    var maxFileSize = 50000000;  // 最大檔案大小（這裡為 50MB）
+
+    // 檢查是否有選擇檔案
+    if (input.files && input.files[0]) {
+        // 檢查檔案大小
+        if (input.files[0].size > maxFileSize) {
+            alert("檔案大小超出限制：" + (maxFileSize / 1000000) + "MB");
+            input.value = "";  // 清除選擇的檔案
+        }
+    }
+}
+</script>
+
+
+    <div class="container">
+        <!-- 上傳文件 -->
+        <form class="form-upload" action="upload.php" method="post" enctype="multipart/form-data">
+            <h2 class="form-upload-heading">選擇您要上傳的文檔:</h2>
+            <div class="form-group">
+                <input type="file" name="fileToUpload" id="fileToUpload" class="form-control-file" accept=".txt" onchange="checkFileSize(this)">
+            </div>
+            <div class="form-group">
+                <input type="password" name="password" id="password" class="form-control" placeholder="輸入您要加密的密碼">
+            </div>
+            <button class="btn btn-lg btn-primary btn-block" type="submit" name="submit">Upload File</button>
+        </form>
+
+        <!-- 解密文件 -->
+        <form class="form-decrypt" action="decrypt.php" method="post" enctype="multipart/form-data">
+            <h2 class="form-decrypt-heading">選擇您要解密的文檔:</h2>
+            <div class="form-group">
+                <input type="file" name="fileToDecrypt" id="fileToDecrypt" class="form-control-file" accept=".txt" onchange="checkFileSize(this)">
+            </div>
+            <div class="form-group">
+                <input type="password" name="password_to_decrypt" id="password_to_decrypt" class="form-control" placeholder="輸入解密密碼">
+            </div>
+            <button class="btn btn-lg btn-primary btn-block" type="submit" name="decrypt">Decrypt File</button>
+        </form>
+    </div>
+
+    <!-- 引入Bootstrap 4 JS -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</body>
+</html>
